@@ -1,0 +1,24 @@
+{
+    "name": "alanfm/BuilderHTML",
+    "discription": "Interface para criação de códigos html com PHP",
+    "keywords": ["HTML", "Builder", "PHP"],
+
+    "authors": [
+        {
+            "name": "Alan Freire",
+            "email": "alan_freire@msn.com",
+            "role": "Developer"
+        }
+    ],
+
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "HTML\\": "src",
+            "Tests\\": "tests"
+        }
+    }
+}
