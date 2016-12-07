@@ -35,19 +35,25 @@ echo $tag->build();
 Os parametros recebido pela instaciação da classe Tag são:
 
 1. Nome da tag do HTML.
+
         Exemplo:
+        
                 * `new Tag('div')`
                 * `new Tag('p', array(new Tag('strong', 'Nome: '), 'Fulano de tal'))`
 
 2. O que será colocado dentro da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
+
         Exemplo:
+        
                 1. `'Uma string simples'`
                 2. `array('Uma string', 'Outra string')`
                 3. `array(new Tag('name'), 'Uma string')`
                 4. `array(new Tag('name', array(new Tag('name', 'Texto simples', array('attr'=>array('value1', 'value2')))))`
 
 3. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo
+
         Exemplo:
+        
                 * `new Tag('p', 'Meu paragrafo', array('class'=>array('text-justify', 'text-muted')))`
                 * `new Tag('div', null, array('id'=>array('main'), 'class'=>array('align-top', 'cleaner')`
 
