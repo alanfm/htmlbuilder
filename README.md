@@ -1,14 +1,14 @@
 # htmlBuilder
 
 
-#### Pequeno e simples sistema de criação de tags HTML
+## Simples classe para criação de tags HTML
 
-Sistema simples que traz uma interface para criação de tags `HTML`, feito em `PHP` para sistema que necessitem de criação de forma dinâmica do código `HTML`.
+Ĉlasse que traz uma interface para criação de tags `HTML`. Feito em `PHP` para sistema que necessitão de criação de forma dinâmica do código `HTML`. Que pode possibilita o uso dos scripts `PHP` sem a necessidade de misturar com códigos `HTML`
 
-O sistema funciona de forma simples e rápido, podendo ser utilizado também com um sistema de cache para não necessitar o processo de geração de código toda requisição e diminuir o throughput.
+O sistema funciona de forma simples, podendo ser utilizado junto com um sistema de cache para não necessitar o processo de geração de código a toda requisição e diminuir o throughput.
 
 ### Pré-requisitos
-* PHP 7
+* PHP 7.0
 * Composer
 
 ### Instação
@@ -37,25 +37,25 @@ Os parametros recebido pela instaciação da classe Tag são:
 1. Nome da tag do HTML.
 
         Exemplo:
-        
-                * `new Tag('div')`
-                * `new Tag('p', array(new Tag('strong', 'Nome: '), 'Fulano de tal'))`
 
-2. O que será colocado dentro da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
+                `new Tag('div')`
+                `new Tag('p', array(new Tag('strong', 'Nome: '), 'Fulano de tal'))`
 
-        Exemplo:
-        
-                1. `'Uma string simples'`
-                2. `array('Uma string', 'Outra string')`
-                3. `array(new Tag('name'), 'Uma string')`
-                4. `array(new Tag('name', array(new Tag('name', 'Texto simples', array('attr'=>array('value1', 'value2')))))`
-
-3. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo
+2. Conteúdo da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
 
         Exemplo:
-        
-                * `new Tag('p', 'Meu paragrafo', array('class'=>array('text-justify', 'text-muted')))`
-                * `new Tag('div', null, array('id'=>array('main'), 'class'=>array('align-top', 'cleaner')`
+
+                `'Uma string simples'`
+                `array('Uma string', 'Outra string')`
+                `array(new Tag('name'), 'Uma string')`
+                `array(new Tag('name', array(new Tag('name', 'Texto simples', array('attr'=>array('value1', 'value2')))))`
+
+3. Atributos da tag. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo
+
+        Exemplo:
+
+                `new Tag('p', 'Meu paragrafo', array('class'=>array('text-justify', 'text-muted')))`
+                `new Tag('div', null, array('id'=>array('main'), 'class'=>array('align-top', 'cleaner')`
 
 E para exibir o código gerado basta chamar o método build.
 O método build não imprime na tela do browser, apenas retorna o códgo HTML gerado.
@@ -192,3 +192,6 @@ Resultado
     </body>
 </html>
 ```
+### Licença
+
+MIT © 2016 Alan Freire
