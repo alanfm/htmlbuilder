@@ -15,12 +15,10 @@ use HTML\Tag as Tag;
 
 $html = new HTML\HTML();
 
-$ul = new Tag('ul', [new Tag('li', 'Item 1'), new Tag('li', 'Item 2'), new Tag('li', 'Item 2')]);
-
-$html->addInBody(new Tag('h1', 'Minha Página com PHP!', ['class'=>['teste'], 'id'=>['my-title']]))
-     ->addInBody(new Tag('p', ['Pequeno texto para teste', new Tag('br'), 'Minha Página!', new Tag('br'), 'Outra linha!']))
-     ->addInHead(new Tag('title', 'Minha Página!'))
-     ->addInBody($ul)
-     ->addInBody(new Tag('div', [new Tag('ul', [new Tag('li', [new Tag('a', 'Link', ['href'=>['#teste']])])])]));
+$html->addInHead(new Tag('title', 'htmlBuilder'));
+$html->addInBody(new Tag('h1', 'Pagina criado com htmlBuilder'))
+     ->addInBody(new Tag('p', 'Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium lectus id turpis. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Fusce wisi. Phasellus faucibus molestie nisl. Fusce eget urna. Curabitur vitae diam non enim vestibulum interdum. Nulla quis diam. Ut tempus purus at lorem.'))
+     ->addInBody(new Tag('hr'))
+     ->addInBody(new Tag('small', ['Desenvolvido por ', new Tag('a', 'Alan Freire', ['href'=>['//facebook.com/alan.freire']])]));
 
 echo $html->build();
