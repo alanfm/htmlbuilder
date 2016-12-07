@@ -15,9 +15,27 @@ class Tag implements InterfaceTags
     public function __construct(string $name, $value = null, array $attr = [])
     {
         $this->name = $name;
-        $this->value = $value;
+        $this->setValue($value);
         $this->attr = $attr;
         $this->listTag = ['br', 'link', 'meta', 'hr', 'img', 'input'];
+    }
+
+    public function setValue($value)
+    {
+        if (is_int($value) || is_bool($value) || is_double($value)) {
+            throw new Exception("[class:Tag|method:setValue()]: Por favor insira um valor válido");
+        }
+
+        $this->value = $value;
+
+        return $this;
+    }
+
+    public function setAttr(array $attr)
+    {
+        $this->attr = $attr;
+
+        return $this;
     }
 
     public function build()

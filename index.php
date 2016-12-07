@@ -11,8 +11,6 @@ if (file_exists($autoload) === false) {
 
 include_once $autoload;
 
-header("Content-Type: text/html; charset=UTF-8",true);
-
 use HTML\Tag as Tag;
 
 $html = new HTML\HTML();
