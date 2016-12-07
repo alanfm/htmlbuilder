@@ -52,7 +52,7 @@ class Tag implements InterfaceTags
                 $this->tag .= '" ';
             }
         }
-        $this->tag .= '>';
+        $this->tag = trim($this->tag) . '>';
 
         if (!in_array(strtolower($this->name), $this->listTag)) {
             $this->tag .= $this->parseValue($this->value) . '</' . $this->name . '>';
