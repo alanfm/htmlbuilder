@@ -59,8 +59,27 @@ A Classe Tag possui 4 métodos publicos:
                 `new Tag('div', null, array('id'=>array('main'), 'class'=>array('align-top', 'cleaner')`
 2. Método para atribuir um conteúdo a tag (`setValue($value)`):
   * O valor pode ser uma string, um objeto do tipo InterfaceTags ou um array contendo objetos ou strings.
+        ```php
+        $p = new Tag('p');
+        echo $p->setValue('Texto do meu parágrafo!')->build();
+
+        ```
+
+        Resultado:
+        ```html
+        <p>Texto do meu parágrafo!</p>
+        ```
 3. Método para atribuição de atributos (`setAttr($attr)`) a tag:
   * O parametro recebido por esse método deve ser um array como no item 1.3.
+        ```php
+        $div = new Tag('span', 'Conteúdo do span!');
+        $div->setAttr(array('class'=>array('text-bold', 'clear')))->build();
+
+        ```
+
+        Resultado:
+        ```html
+        <span class="text-bold clear">Conteúdo do span</span>
 
 4. Método que retorna a tag html (`build()`)
   * O método build não imprime na tela do browser, apenas retorna o códgo HTML gerado.
