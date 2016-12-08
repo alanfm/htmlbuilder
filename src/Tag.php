@@ -7,7 +7,7 @@ use HTML\Interfaces\InterfaceTags;
 class Tag implements InterfaceTags
 {
     private $name;
-    private $value;
+    private $value = [];
     private $attr = [];
     private $tag;
     private $listTag;
@@ -26,14 +26,14 @@ class Tag implements InterfaceTags
             throw new Exception("[class:Tag|method:setValue()]: Por favor insira um valor válido");
         }
 
-        $this->value = $value;
+        $this->value[] = $value;
 
         return $this;
     }
 
-    public function setAttr(array $attr)
+    public function setAttr(string $attr, array $value)
     {
-        $this->attr = $attr;
+        $this->attr[$attr] = $value;
 
         return $this;
     }
