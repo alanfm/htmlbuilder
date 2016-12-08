@@ -32,49 +32,54 @@ echo $tag->build();
 
 ```
 
-Os parametros recebido pela instaciação da classe Tag são:
+A Classe Tag possui 4 métodos publicos:
 
-1. Nome da tag do HTML.
+1. Método construtor (`__construct($name, $value, $attr)`) recebe 3 parametros:
+  1. Nome da tag do HTML.
 
         Exemplo:
 
                 `new Tag('div')`
                 `new Tag('p', array(new Tag('strong', 'Nome: '), 'Fulano de tal'))`
 
-2. Conteúdo da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
+  2. Conteúdo da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
 
         Exemplo:
 
-                `'Uma string simples'`
-                `array('Uma string', 'Outra string')`
-                `array(new Tag('name'), 'Uma string')`
-                `array(new Tag('name', array(new Tag('name', 'Texto simples', array('attr'=>array('value1', 'value2')))))`
+                `new Tag('div','Uma string simples')`
+                `new Tag('div', array('Uma string', 'Outra string'))`
+                `new Tag('div', array(new Tag('p'), 'Uma string'))`
+                `new Tag('div', array(new Tag('div', array(new Tag('p', 'Texto simples', array('attr'=>array('value1', 'value2'))))))`
 
-3. Atributos da tag. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo
+  3. Atributos da tag. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo
 
         Exemplo:
 
                 `new Tag('p', 'Meu paragrafo', array('class'=>array('text-justify', 'text-muted')))`
                 `new Tag('div', null, array('id'=>array('main'), 'class'=>array('align-top', 'cleaner')`
+2. Método para atribuir um conteúdo a tag (`setValue($value)`):
+  * O valor pode ser uma string, um objeto do tipo InterfaceTags ou um array contendo objetos ou strings.
+3. Método para atribuição de atributos (`setAttr($attr)`) a tag:
+  * O parametro recebido por esse método deve ser um array como no item 1.3.
 
-E para exibir o código gerado basta chamar o método build.
-O método build não imprime na tela do browser, apenas retorna o códgo HTML gerado.
+4. Método que retorna a tag html (`build()`)
+  * O método build não imprime na tela do browser, apenas retorna o códgo HTML gerado.
 
-```php
-<?php
+        ```php
+        <?php
 
-use HTML\Tag;
+        use HTML\Tag;
 
-$div = new Tag('div', 'Texto que está dentro da minha div.');
+        $div = new Tag('div', 'Texto que está dentro da minha div.');
 
-echo $div->build();
+        echo $div->build();
 
-```
+        ```
 
-Resultado:
-```html
-<div>Texto que está dentro da minha div.</div>
-```
+        Resultado:
+        ```html
+        <div>Texto que está dentro da minha div.</div>
+        ```
 ### Exemplos
 
 Veja abaixo alguns fragmentos de código possiveis de ser usados. Nos exemplos também será usado a classe `HTML` que foi criado com auxílio da classe `Tag`.
