@@ -61,6 +61,7 @@ A Classe Tag possui 4 métodos publicos:
   * O valor pode ser uma string, um objeto do tipo InterfaceTags ou um array contendo objetos ou strings.
         ```php
         $p = new Tag('p');
+
         echo $p->setValue('Texto do meu parágrafo!')->build();
 
         ```
@@ -73,7 +74,8 @@ A Classe Tag possui 4 métodos publicos:
   * O parametro recebido por esse método deve ser um array como no item 1.3.
         ```php
         $div = new Tag('span', 'Conteúdo do span!');
-        $div->setAttr(array('class'=>array('text-bold', 'clear')))->build();
+
+        echo $div->setAttr(array('class'=>array('text-bold', 'clear')))->build();
 
         ```
 
@@ -89,7 +91,9 @@ A Classe Tag possui 4 métodos publicos:
 
         use HTML\Tag;
 
-        $div = new Tag('div', 'Texto que está dentro da minha div.');
+        $div = new Tag('div');
+        $div->setValue('Texto que está dentro da minha div.');
+        $div->setAttr(array('id'=>array('main'), 'class'=>array('content')))
 
         echo $div->build();
 
@@ -97,7 +101,7 @@ A Classe Tag possui 4 métodos publicos:
 
         Resultado:
         ```html
-        <div>Texto que está dentro da minha div.</div>
+        <div id="main" class="content">Texto que está dentro da minha div.</div>
         ```
 ### Exemplos
 
