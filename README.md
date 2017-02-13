@@ -248,8 +248,9 @@ A classe page abstrai a criação de alguns elementos básicos de uma página HT
 
 #### Métodos da classe
 1. make:
-        * Recebe um parametro que é o titulo da página
-        `Factory::make('Titulo')`
+
+  * Recebe um parametro que é o titulo da página
+    `Factory::make('Titulo')`
 
 Exemplo:
 
