@@ -243,32 +243,6 @@ Resultado
 </html>
 ```
 
-### Classe Page
-A classe page abstrai a criação de alguns elementos básicos de uma página HTML
-
-#### Métodos da classe
-1. make:
-
-  * Recebe um parametro que é o titulo da página
-    `Factory::make('Titulo')`
-
-Exemplo:
-
-```php
-<?php
-use HTML\Factory;
-
-echo Factory::make('input')->attr(['type'=>['text'], 'name'=>['my_input'], 'value'=>['texto']])->build();
-
-```
-
-Resultado
-
-```html
-<input type="text" name="my_input" value="texto">
-
-```
-
 ### Licença
 
 MIT © 2016 Alan Freire
