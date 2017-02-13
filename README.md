@@ -253,15 +253,20 @@ A classe page abstrai a criação de alguns elementos básicos de uma página HT
 
 Exemplo:
 
-        ```php
-        echo Factory::make('input')->attr(['type'=>['text'], 'name'=>['my_input'], 'value'=>['texto']])->build();
-        ```
+```php
+<?php
+use HTML\Factory;
+
+echo Factory::make('input')->attr(['type'=>['text'], 'name'=>['my_input'], 'value'=>['texto']])->build();
+
+```
 
 Resultado
 
-        ```html
-        <input type="text" name="my_input" value="texto">
-        ```
+```html
+<input type="text" name="my_input" value="texto">
+
+```
 
 ### Licença
 
