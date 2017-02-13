@@ -69,8 +69,8 @@ A Classe Tag possui 4 métodos publicos:
   * O valor pode ser uma string, um objeto do tipo InterfaceTags ou um array contendo objetos ou strings.
         ```php
         $p = new Tag('p');
-
-        echo $p->value('Texto do meu parágrafo!')->build();
+        $p->value('Texto do meu parágrafo!');
+        echo $p->build();
 
         ```
 
@@ -82,8 +82,8 @@ A Classe Tag possui 4 métodos publicos:
   * O parametro recebido por esse método deve ser um array como no item 1.3.
         ```php
         $div = new Tag('span', 'Conteúdo do span!');
-
-        echo $div->attr(['class'=>['text-bold', 'clear']])->build();
+        $div->attr(['class'=>['text-bold', 'clear']]);
+        echo $div->build();
 
         ```
 
@@ -138,7 +138,7 @@ $p = new Tag('p');
 
 $p->value('Texto que estará dentro do meu paragrafo.');
 
-$attr = array('class'=>array('text-justify', 'text-muted'));
+$attr = ['class'=>['text-justify', 'text-muted']];
 
 $p->attr($attr);
 
@@ -206,33 +206,34 @@ Resultado
 </ul>
 ```
 
-Usando a classe HTML
+### Usando a classe Factory
+
+A classe Factory fabrica objetos do tipo Tag.
 
 ```php
 <?php
 
-use HTML\Tag;
-use HTML\HTML;
+use HTML\Factory;
 
-$html = new HTML();
-$title = new Tag('title', 'Titulo da Minha Página');
-$h1 = new Tag('h1', 'Minha Página');
-$p = new Tag('p', 'Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium lectus id turpis. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Fusce wisi. Phasellus faucibus molestie nisl. Fusce eget urna. Curabitur vitae diam non enim vestibulum interdum. Nulla quis diam. Ut tempus purus at lorem.');
+$html = Factory::make('html')->attr('lang', ['pt-br']);
+$title = Factory::make('title')->value('Titulo da Minha Página');
+$h1 = Factory('h1')->value('Minha Página')->attr('class',['teste'])->attr('id', ['my-title']);
+$p = Factory('p')->value('Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium lectus id turpis. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Fusce wisi. Phasellus faucibus molestie nisl. Fusce eget urna. Curabitur vitae diam non enim vestibulum interdum. Nulla quis diam. Ut tempus purus at lorem.');
 
-$html->addInHead($title);
-$html->addInBody($h1)->addInBody($p);
+$head = Factory::make('head');
+$head->value($title);
 
+$body = Factory::make('body');
+$body->value($h1)->value($p);
+
+$html->value($head)->value($body);
 echo $html->build();
 ```
 
 Resultado
 ```html
-<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Titulo da Minha Página</title>
     </head>
     <body>
@@ -241,6 +242,24 @@ Resultado
     </body>
 </html>
 ```
+
+### Classe Page
+A classe page abstrai a criação de alguns elementos básicos de uma página HTML
+
+#### Métodos da classe
+1. make:
+        * Recebe um parametro que é o titulo da página
+        `Factory::make('Titulo')`
+
+Exemplo:
+        ```php
+        echo Factory::make('input')->attr(['type'=>['text'], 'name'=>['my_input'], 'value'=>['texto']])->build();
+        ```
+Resultado
+        ```html
+        <input type="text" name="my_input" value="texto">
+        ```
+
 ### Licença
 
 MIT © 2016 Alan Freire
