@@ -3,7 +3,7 @@
 
 ## Simples classe para criação de tags HTML
 
-Ĉlasse que traz uma interface para criação de tags `HTML`. Feito em `PHP` para sistema que necessitão de criação de forma dinâmica do código `HTML`. Que pode possibilita o uso dos scripts `PHP` sem a necessidade de misturar com códigos `HTML`
+Ĉlasse que traz uma interface para criação de tags `HTML`. Feito em `PHP` para sistema que necessitam criar de forma dinâmica códigos `HTML`. E possibilita o uso dos scripts `PHP` sem a necessidade de misturar com códigos `HTML`
 
 O sistema funciona de forma simples, podendo ser utilizado junto com um sistema de cache para não necessitar o processo de geração de código a toda requisição e diminuir o throughput.
 
@@ -13,7 +13,7 @@ O sistema funciona de forma simples, podendo ser utilizado junto com um sistema 
 
 ### Instação
 
-Use o comando simple de instalação do composer
+Use o comando de instalação do composer
 
 `$ composer install`
 
@@ -26,12 +26,18 @@ Basta a chamado do autoload gerado pelo composer.
 
 include __DIR__ . '/vendor/autoload.php';
 
-$tag = \HTML\Tag('name_tag', $value, array('attribute'=>array('value1', 'value2')));
+use HTML\Factory;
 
-echo $tag->build();
+$tag = Factory::make('tag')->value('Valor')->attr('attr', ['value1', 'value2']);
+
+echo $tag->show();
 
 ```
-
+Resultado
+```html
+<tag attr="value1 value2">Valor</tag>
+```
+### Uso da classe Tag
 A Classe Tag possui 4 métodos publicos:
 
 1. Método construtor (`__construct($name, $value, $attr)`) recebe 3 parametros:
@@ -40,29 +46,31 @@ A Classe Tag possui 4 métodos publicos:
         Exemplo:
 
                 `new Tag('div')`
-                `new Tag('p', array(new Tag('strong', 'Nome: '), 'Fulano de tal'))`
+                `new Tag('p', 'Conteúdo do parágrafo.')`
+                `new Tag('span', 'Conteúdo do span.', ['atributo'=>'atributo-do-span'])`
 
   2. Conteúdo da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
 
         Exemplo:
 
                 `new Tag('div','Uma string simples')`
-                `new Tag('div', array('Uma string', 'Outra string'))`
-                `new Tag('div', array(new Tag('p'), 'Uma string'))`
-                `new Tag('div', array(new Tag('div', array(new Tag('p', 'Texto simples', array('attr'=>array('value1', 'value2'))))))`
+                `new Tag('div', ['Uma string', 'Outra string'])`
+                `new Tag('div', [new Tag('p'), 'Uma string'])`
+                `new Tag('div', [new Tag('div', [new Tag('p', 'Texto simples', ['attr'=>['value1', 'value2']])])])`
 
-  3. Atributos da tag. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo
+  3. Atributos da tag. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo.
 
         Exemplo:
 
-                `new Tag('p', 'Meu paragrafo', array('class'=>array('text-justify', 'text-muted')))`
-                `new Tag('div', null, array('id'=>array('main'), 'class'=>array('align-top', 'cleaner')`
-2. Método para atribuir um conteúdo a tag (`setValue($value)`):
+                `new Tag('p', 'Meu paragrafo', ['class'=>['text-justify', 'text-muted']])`
+                `new Tag('div', null, ['id'=>['main'], 'class'=>['align-top', 'cleaner']])`
+
+2. Método para atribuir um conteúdo a tag (`value($value)`):
   * O valor pode ser uma string, um objeto do tipo InterfaceTags ou um array contendo objetos ou strings.
         ```php
         $p = new Tag('p');
 
-        echo $p->setValue('Texto do meu parágrafo!')->build();
+        echo $p->value('Texto do meu parágrafo!')->build();
 
         ```
 
@@ -70,18 +78,31 @@ A Classe Tag possui 4 métodos publicos:
         ```html
         <p>Texto do meu parágrafo!</p>
         ```
-3. Método para atribuição de atributos (`setAttr($attr)`) a tag:
+3. Método para atribuição de atributos (`attr($attr)`) a tag:
   * O parametro recebido por esse método deve ser um array como no item 1.3.
         ```php
         $div = new Tag('span', 'Conteúdo do span!');
 
-        echo $div->setAttr(array('class'=>array('text-bold', 'clear')))->build();
+        echo $div->attr(['class'=>['text-bold', 'clear']])->build();
 
         ```
 
         Resultado:
         ```html
         <span class="text-bold clear">Conteúdo do span</span>
+        ```
+
+  * Outra forma de setar os atributos é passando dois parametros no método `attr($attr, $valor)`.
+        ```php
+        $div = new Tag('span', 'Conteúdo do span!');
+        $div->attr('class', ['text-bold', 'clear']);
+        echo $div->build();
+        ```
+
+        Resultado:
+        ```html
+        <span class="text-bold clear">Conteúdo do span</span>
+        ```
 
 4. Método que retorna a tag html (`build()`)
   * O método build não imprime na tela do browser, apenas retorna o códgo HTML gerado.
@@ -92,8 +113,8 @@ A Classe Tag possui 4 métodos publicos:
         use HTML\Tag;
 
         $div = new Tag('div');
-        $div->setValue('Texto que está dentro da minha div.');
-        $div->setAttr(array('id'=>array('main'), 'class'=>array('content')))
+        $div->value('Texto que está dentro da minha div.');
+        $div->attr(['id'=>['main'], 'class'=>['content']]);
 
         echo $div->build();
 
@@ -115,11 +136,11 @@ use HTML\Tag;
 
 $p = new Tag('p');
 
-$p->setValue('Texto que estará dentro do meu paragrafo.');
+$p->value('Texto que estará dentro do meu paragrafo.');
 
 $attr = array('class'=>array('text-justify', 'text-muted'));
 
-$p->setAttr($attr);
+$p->attr($attr);
 
 echo $p->build();
 ```
@@ -140,13 +161,13 @@ $br = new Tag('br');
 
 $p = new Tag('p');
 
-$contentP[] = $strong->setValue('Nome: ');
+$contentP[] = $strong->value('Nome: ');
 $contentP[] = 'Fulano de Tals';
 $contentP[] = $br;
-$contentP[] = $strong->setValue('E-mail: ');
+$contentP[] = $strong->value('E-mail: ');
 $contentP[] = 'fulano@de.tals';
 
-echo $p->setValue($contentP)->setAttr(['class'=>['text-center']])->build();
+echo $p->value($contentP)->attr(['class'=>['text-center']])->build();
 ```
 
 Resultado:

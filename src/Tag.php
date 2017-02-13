@@ -77,8 +77,14 @@ class Tag implements InterfaceTags
      * @param array
      * @return object
      */
-    public function attr(string $attr, array $value)
+    public function attr($attr, array $value = null)
     {
+        if (is_array($attr)) {
+            $this->attr = array_merge($attr, $this->attr);
+            
+            return $this;
+        }
+
         $this->attr[$attr] = $value;
 
         return $this;
