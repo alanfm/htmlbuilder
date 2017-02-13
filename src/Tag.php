@@ -1,29 +1,69 @@
 <?php
-
+/**
+ * @package HTML
+ */
 namespace HTML;
 
+/**
+ * @dependences InterfaceTags
+ */
 use HTML\Interfaces\InterfaceTags;
 
+/**
+ * @class Tag
+ * 
+ * Contem um algoritmo de criação de tags HTML
+ */
 class Tag implements InterfaceTags
 {
+    /**
+     * @var string
+     */
     private $name;
-    private $value = [];
-    private $attr = [];
-    private $tag;
-    private $listTag;
 
+    /**
+     * @var array
+     */
+    private $value = [];
+
+    /**
+     * @var array
+     */
+    private $attr = [];
+
+    /**
+     * @var string
+     */
+    private $tag;
+
+    /**
+     * @var array
+     */
+    private $listTag = ['br', 'link', 'meta', 'hr', 'img', 'input', 'base'];
+
+
+    /**
+     * @method __construct
+     * @param string
+     * @param mix
+     * @param array
+     */
     public function __construct(string $name, $value = null, array $attr = [])
     {
         $this->name = $name;
-        $this->setValue($value);
+        $this->value($value);
         $this->attr = $attr;
-        $this->listTag = ['br', 'link', 'meta', 'hr', 'img', 'input'];
     }
 
-    public function setValue($value)
+    /**
+     * @method value
+     * @param mix
+     * @return object
+     */
+    public function value($value)
     {
         if (is_int($value) || is_bool($value) || is_double($value)) {
-            throw new Exception("[class:Tag|method:setValue()]: Por favor insira um valor válido");
+            throw new Exception("Por favor insira um valor válido");
         }
 
         $this->value[] = $value;
@@ -31,13 +71,23 @@ class Tag implements InterfaceTags
         return $this;
     }
 
-    public function setAttr(string $attr, array $value)
+    /**
+     * @method
+     * @param string
+     * @param array
+     * @return object
+     */
+    public function attr(string $attr, array $value)
     {
         $this->attr[$attr] = $value;
 
         return $this;
     }
 
+    /**
+     * @method build
+     * @return string;
+     */
     public function build()
     {
         $this->tag = '<' . $this->name;
@@ -61,6 +111,11 @@ class Tag implements InterfaceTags
         return $this->tag;
     }
 
+    /**
+     * @method parseValue
+     * @param mix
+     * @return mix
+     */
     private function parseValue($value)
     {
         if (is_object($value)) {
