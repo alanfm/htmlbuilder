@@ -62,10 +62,6 @@ class Tag implements InterfaceTags
      */
     public function value($value)
     {
-        if (is_int($value) || is_bool($value) || is_double($value)) {
-            throw new Exception("Por favor insira um valor válido");
-        }
-
         $this->value[] = $value;
 
         return $this;
@@ -77,7 +73,7 @@ class Tag implements InterfaceTags
      * @param array
      * @return object
      */
-    public function attr($attr, array $value = null)
+    public function attr($attr, $value = null)
     {
         if (is_array($attr)) {
             $this->attr = array_merge($attr, $this->attr);
@@ -91,10 +87,11 @@ class Tag implements InterfaceTags
     }
 
     /**
-     * @method build
+     * @method render
+     * 
      * @return string;
      */
-    public function build()
+    public function render()
     {
         $this->tag = '<' . $this->name;
 
@@ -125,7 +122,7 @@ class Tag implements InterfaceTags
     private function parseValue($value)
     {
         if (is_object($value)) {
-            return $value->build();
+            return $value->render();
         }
 
         if (is_array($value)) {

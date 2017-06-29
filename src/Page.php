@@ -101,15 +101,15 @@ class Page
     }
 
     /**
-     * @method show
+     * @method render
      * @access public
      * 
      * Envia para o browser o código html
      * 
      * @return void
      */
-    public function show()
+    public function render()
     {
-        echo '<!DOCTYPE html>', $this->html->value($this->head)->value($this->body)->build();
+        echo '<!DOCTYPE html>', $this->html->value($this->head)->value($this->body)->render();
     }
 }
