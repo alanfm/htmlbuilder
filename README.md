@@ -45,31 +45,49 @@ A Classe Tag possui 4 métodos publicos:
 
         Exemplo:
 
-`new Tag('div')`
+```php
+new Tag('div')
+```
 
-`new Tag('p', 'Conteúdo do parágrafo.')`
+```php
+new Tag('p', 'Conteúdo do parágrafo.')
+```
 
-`new Tag('span', 'Conteúdo do span.', ['atributo'=>'atributo-do-span'])`
+```php
+new Tag('span', 'Conteúdo do span.', ['atributo'=>'atributo-do-span'])
+```
 
   2. Conteúdo da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
 
         Exemplo:
 
-`new Tag('div','Uma string simples')`
+```php
+new Tag('div','Uma string simples')
+```
 
-`new Tag('div', ['Uma string', 'Outra string'])`
+```php
+new Tag('div', ['Uma string', 'Outra string'])
+```
 
-`new Tag('div', [new Tag('p'), 'Uma string'])`
+```php
+new Tag('div', [new Tag('p'), 'Uma string'])
+```
 
-`new Tag('div', [new Tag('div', [new Tag('p', 'Texto simples', ['attr'=>['value1', 'value2']])])])`
+```php
+new Tag('div', [new Tag('div', [new Tag('p', 'Texto simples', ['attr'=>['value1', 'value2']])])])
+```
 
   3. Atributos da tag. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo.
 
         Exemplo:
 
-`new Tag('p', 'Meu paragrafo', ['class'=>['text-justify', 'text-muted']])`
+```php
+new Tag('p', 'Meu paragrafo', ['class'=>['text-justify', 'text-muted']])
+```
 
-`new Tag('div', null, ['id'=>['main'], 'class'=>['align-top', 'cleaner']])`
+```php
+new Tag('div', null, ['id'=>['main'], 'class'=>['align-top', 'cleaner']])
+```
 
 2. Método para atribuir um conteúdo a tag (`value($value)`):
   * O valor pode ser uma string, um objeto do tipo InterfaceTags ou um array contendo objetos ou strings.
@@ -263,6 +281,10 @@ Resultado
     </body>
 </html>
 ```
+### Tópicos que não estão na documentação
+
+* Classe Page
+* Classe Elements\Table
 
 ### Licença
 
