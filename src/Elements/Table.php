@@ -3,14 +3,14 @@
 /**
  * @package HTML
  */
-namespace HTML\Tags;
+namespace HTMLBuilder\Elements;
 
 /**
- * @dependence InterfaceTags
+ * @dependence InterfaceElements
  * @dependence Factory
  */
-use HTML\Interfaces\InterfaceTags;
-use HTML\Factory;
+use HTMLHTMLBuilder\Interfaces\InterfaceElements;
+use HTMLHTMLBuilder\Factory;
 
 /**
  * @class Table
@@ -21,57 +21,57 @@ use HTML\Factory;
  * @version 1.0.0
  * @copyright MIT 2017
  */
-class Table implements InterfaceTags
+class Table implements InterfaceElements
 {
 
     /**
-     * @var InterfaceTags $table
+     * @var InterfaceElements $table
      */
     private $table;
 
     /**
-     * @var string $titles
+     * @var string $thead
      * 
      * Recebe os titulos das colunas da tabela
      */
-    private $titles;
+    private $thead;
 
     /**
-     * @var array $content
+     * @var array $tbody
      * 
      * Recebe uma matriz com os dados da tabela
      */
-    private $content;
+    private $tbody;
 
     /**
      * @method __construct()
      * 
-     * @param array $titles
-     * @param array $content
+     * @param array $thead
+     * @param array $tbody
      */
-    public function __construct(array $titles = null, array $content = null)
+    public function __construct(array $thead = null, array $tbody = null)
     {
-        $this->table = Factory::make('table');
-        $this->titles = $titles;
-        $this->value($content);
+        $this->table = ElementFactory::make('table');
+        $this->thead = $thead;
+        $this->value($tbody);
     }
 
     /**
-     * @method titles
+     * @method thead
      * 
      * Seta o valor dos titulos das colunas da tabela
      * 
-     * @param array $titles
+     * @param array $thead
      * 
-     * @return InterfaceTags (Table)
+     * @return InterfaceElements (Table)
      */
-    public function titles(array $titles)
+    public function thead(array $thead)
     {
-        if (!is_array($titles)) {
+        if (!is_array($thead)) {
             throw new \Exception('Parametro inválido! O valor esperado é um vetor');
         }
 
-        $this->titles = $titles;
+        $this->thead = $thead;
 
         return $this;
     }
@@ -85,13 +85,13 @@ class Table implements InterfaceTags
      */
     private function thead_render()
     {
-        $tr = Factory::make('tr');
+        $tr = ElementFactory::make('tr');
 
-        foreach ($this->titles as $text) {
+        foreach ($this->thead as $text) {
             $tr->value(Factory::make('th')->value($text));
         }
 
-        return Factory::make('thead')->value($tr)->render();
+        return ElementFactory::make('thead')->value($tr)->render();
     }
 
     /**
@@ -103,13 +103,13 @@ class Table implements InterfaceTags
      */
     private function tbody_render()
     {
-        $tbody = Factory::make('tbody');
+        $tbody = ElementFactory::make('tbody');
 
-        foreach ($this->content as $row) {
-            $tr = Factory::make('tr');
+        foreach ($this->tbody as $row) {
+            $tr = ElementFactory::make('tr');
 
             foreach ($row as $cell) {
-                $tr->value(Factory::make('td')->value($cell)->render());
+                $tr->value(ElementFactory::make('td')->value($cell)->render());
             }
 
             $tbody->value($tr);
@@ -119,32 +119,29 @@ class Table implements InterfaceTags
     }
 
     /**
-     * @method value()
+     * @method tbody()
      * 
      * Seta o conteúdo da tabela
      * 
-     * @param array(matriz) $value
+     * @param array(matriz) $tbody
      * 
-     * @return InterfaceTag(Table)
+     * @return InterfaceElement(Table)
      */
-    public function value($value)
+    public function tbody(array $tbody)
     {
-        if (!is_array($value)) {
+        if (!is_array($tbody)) {
             throw new \Exception('Parametro inválido! O valor esperado é uma matriz.');
         }
 
-        foreach ($value as $v) {
-            if (!is_array($v)) {
+        foreach ($tbody as $row) {
+            if (!is_array($row)) {
                 throw new \Exception('Parametro inválido! O valor esperado é uma matriz.');
             }
-
-            break;
         }
 
-        $this->content = $value;
+        $this->tbody = $tbody;
 
         return $this;
-
     }
 
     /**
@@ -155,7 +152,7 @@ class Table implements InterfaceTags
      * @param string $attr
      * @param mix $value
      * 
-     * @return InterfaceTag(Table)
+     * @return InterfaceElement(Table)
      */
     public function attr($attr, $value)
     {
@@ -177,5 +174,20 @@ class Table implements InterfaceTags
                     ->value($this->tbody_render());
 
         return $this->table->render();
+    }
+
+    /**
+     * @method value()
+     * 
+     * Adiciona valor(es) as colunas da tabela
+     * 
+     * @param array $tbody
+     * @return InterfaceElement(Table)
+     */
+    public function value($tabody)
+    {
+        $this->tbody($tbody);
+
+        return $this;
     }
 }

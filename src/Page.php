@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @package HTML
+ * @package HTMLBuilder
  */
-namespace HTML;
+namespace HTMLBuilder;
 
 /**
- * @dependence HTML\Factory
+ * @dependence HTMLBuilder\ElementFactory
  */
-use HTML\Factory;
+use HTMLBuilder\ElementFactory;
 
 /**
  * @class Page
@@ -54,18 +54,18 @@ class Page
     public function __construct($title)
     {
         // Cria a tag html e seta a linguem
-        $this->html = Factory::make('html')->attr('lang', ['pt-br']);
+        $this->html = ElementFactory::make('html')->attr('lang', ['pt-br']);
         // Cria a tag head e seta um valor com o titulo da página
-        $this->head = Factory::make('head')->value(Factory::make('title')->value($title));
+        $this->head = ElementFactory::make('head')->value(ElementFactory::make('title')->value($title));
         // Cria a tag body
-        $this->body = Factory::make('body');
+        $this->body = ElementFactory::make('body');
 
         // Seta uma meta com a códificação dos caracteres
-        $this->add_in_head(Factory::make('meta')->attr('charset', ['utf-8']));
+        $this->add_in_head(ElementFactory::make('meta')->attr('charset', ['utf-8']));
         // Seta uma meta com compatibilidade do código
-        $this->add_in_head(Factory::make('meta')->attr('http-equiv', ['X-UA-Compatible'])->attr('content',['IE=edge']));
+        $this->add_in_head(ElementFactory::make('meta')->attr('http-equiv', ['X-UA-Compatible'])->attr('content',['IE=edge']));
         // Seta uma meta com os parametros de acessibilidade para o código CSS
-        $this->add_in_head(Factory::make('meta')->attr('name', ['viewport'])->attr('content', ['width=device-width, initial-scale=1']));
+        $this->add_in_head(ElementFactory::make('meta')->attr('name', ['viewport'])->attr('content', ['width=device-width, initial-scale=1']));
     }
 
     /**

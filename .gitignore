@@ -2,3 +2,4 @@ vendor/
 .phpintel/
 
 composer.lock
+index.php

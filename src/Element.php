@@ -2,19 +2,19 @@
 /**
  * @package HTML
  */
-namespace HTML;
+namespace HTMLBuilder;
 
 /**
- * @dependences InterfaceTags
+ * @dependences InterfaceElements
  */
-use HTML\Interfaces\InterfaceTags;
+use HTMLBuilder\Interfaces\InterfaceElements;
 
 /**
- * @class Tag
+ * @class Element
  * 
  * Contem um algoritmo de criação de tags HTML
  */
-class Tag implements InterfaceTags
+class Element implements InterfaceElements
 {
     /**
      * @var string
@@ -39,7 +39,7 @@ class Tag implements InterfaceTags
     /**
      * @var array
      */
-    private $listTag = ['br', 'link', 'meta', 'hr', 'img', 'input', 'base'];
+    private $listElement = ['br', 'link', 'meta', 'hr', 'img', 'input', 'base'];
 
 
     /**
@@ -107,7 +107,7 @@ class Tag implements InterfaceTags
         }
         $this->tag = trim($this->tag) . '>';
 
-        if (!in_array(strtolower($this->name), $this->listTag)) {
+        if (!in_array(strtolower($this->name), $this->listElement)) {
             $this->tag .= $this->parseValue($this->value) . '</' . $this->name . '>';
         }
 

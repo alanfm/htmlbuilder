@@ -6,16 +6,17 @@ header("cache-control: must-revalidate");
  * Carregamento automatico das classes
  */
 $autoload = __DIR__ . '/vendor/autoload.php';
-if (file_exists($autoload) === false) {
-    print('Por favor instalar as dependências do composer');
+
+if (!file_exists($autoload)) {
+    echo 'Por favor instalar as dependências do composer: <code>$ composer install</code>';
     exit;
 }
 
 include_once $autoload;
 
-use HTML\Page;
-use HTML\Factory;
-use HTML\Tags\Table;
+use HTMLBuilder\Page;
+use HTMLBuilder\Factory;
+use HTMLBuilder\Tags\Table;
 
 $page = new Page('Minha Página!');
 $page->add_in_head(Factory::make('base')->attr('href', ['http://html.dev/htmlBuilder']));
