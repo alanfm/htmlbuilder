@@ -15,7 +15,7 @@ O sistema funciona de forma simples, podendo ser utilizado junto com um sistema 
 
 Use o comando de instalação do composer
 
-`$ composer install`
+`$ composer require alanfm/html-builder`
 
 ### Como trabalhar com o htmlBuilder
 
@@ -26,19 +26,19 @@ Basta a chamado do autoload gerado pelo composer.
 
 include __DIR__ . '/vendor/autoload.php';
 
-use HTML\Factory;
+use HTMLBuilder\ElementFactory;
 
-$tag = Factory::make('tag')->value('Valor')->attr('attr', ['value1', 'value2']);
+$tag = ElementFactory::make('tag')->value('Valor')->attr('attr', ['value1', 'value2']);
 
-echo $tag->show();
+echo $tag->render();
 
 ```
 Resultado
 ```html
 <tag attr="value1 value2">Valor</tag>
 ```
-### Uso da classe Tag
-A Classe Tag possui 4 métodos publicos:
+### Uso da classe Element
+A Classe Element possui 4 métodos publicos:
 
 1. Método construtor (`__construct($name, $value, $attr)`) recebe 3 parametros:
   1. Nome da tag do HTML.
@@ -46,35 +46,35 @@ A Classe Tag possui 4 métodos publicos:
         Exemplo:
 
 ```php
-new Tag('div')
+new Element('div')
 ```
 
 ```php
-new Tag('p', 'Conteúdo do parágrafo.')
+new Element('p', 'Conteúdo do parágrafo.')
 ```
 
 ```php
-new Tag('span', 'Conteúdo do span.', ['atributo'=>'atributo-do-span'])
+new Element('span', 'Conteúdo do span.', ['atributo'=>'atributo-do-span'])
 ```
 
-  2. Conteúdo da tag. Pode ser passado um objeto tipo InterfaceTags, strings ou um array com objetos ou strings.
+  2. Conteúdo da tag. Pode ser passado um objeto tipo InterfaceElements, strings ou um array com objetos ou strings.
 
         Exemplo:
 
 ```php
-new Tag('div','Uma string simples')
+new Element('div','Uma string simples')
 ```
 
 ```php
-new Tag('div', ['Uma string', 'Outra string'])
+new Element('div', ['Uma string', 'Outra string'])
 ```
 
 ```php
-new Tag('div', [new Tag('p'), 'Uma string'])
+new Element('div', [new Element('p'), 'Uma string'])
 ```
 
 ```php
-new Tag('div', [new Tag('div', [new Tag('p', 'Texto simples', ['attr'=>['value1', 'value2']])])])
+new Element('div', [new Element('div', [new Element('p', 'Texto simples', ['attr'=>['value1', 'value2']])])])
 ```
 
   3. Atributos da tag. Recebe os artributos do elemento HTML em forma de um array, onde a chave é o nome do atributo e o valor é outro array com os valores possiveis do atributo.
@@ -82,20 +82,20 @@ new Tag('div', [new Tag('div', [new Tag('p', 'Texto simples', ['attr'=>['value1'
         Exemplo:
 
 ```php
-new Tag('p', 'Meu paragrafo', ['class'=>['text-justify', 'text-muted']])
+new Element('p', 'Meu paragrafo', ['class'=>['text-justify', 'text-muted']])
 ```
 
 ```php
-new Tag('div', null, ['id'=>['main'], 'class'=>['align-top', 'cleaner']])
+new Element('div', null, ['id'=>['main'], 'class'=>['align-top', 'cleaner']])
 ```
 
 2. Método para atribuir um conteúdo a tag (`value($value)`):
-  * O valor pode ser uma string, um objeto do tipo InterfaceTags ou um array contendo objetos ou strings.
+  * O valor pode ser uma string, um objeto do tipo InterfaceElements ou um array contendo objetos ou strings.
 
 ```php
-$p = new Tag('p');
+$p = new Element('p');
 $p->value('Texto do meu parágrafo!');
-echo $p->build();
+echo $p->render();
 
 ```
 
@@ -109,9 +109,9 @@ Resultado:
   * O parametro recebido por esse método deve ser um array como no item 1.3.
 
 ```php
-$div = new Tag('span', 'Conteúdo do span!');
+$div = new Element('span', 'Conteúdo do span!');
 $div->attr(['class'=>['text-bold', 'clear']]);
-echo $div->build();
+echo $div->render();
 
 ```
 
@@ -124,9 +124,9 @@ Resultado:
   * Outra forma de setar os atributos é passando dois parametros no método `attr($attr, $valor)`.
 
 ```php
-$div = new Tag('span', 'Conteúdo do span!');
+$div = new Element('span', 'Conteúdo do span!');
 $div->attr('class', ['text-bold', 'clear']);
-echo $div->build();
+echo $div->render();
 ```
 
 Resultado:
@@ -135,19 +135,19 @@ Resultado:
 <span class="text-bold clear">Conteúdo do span</span>
 ```
 
-4. Método que retorna a tag html (`build()`)
+4. Método que retorna a tag html (`render()`)
   * O método build não imprime na tela do browser, apenas retorna o códgo HTML gerado.
 
 ```php
 <?php
 
-use HTML\Tag;
+use HTMLBuilder\Element;
 
-$div = new Tag('div');
+$div = new Element('div');
 $div->value('Texto que está dentro da minha div.');
 $div->attr(['id'=>['main'], 'class'=>['content']]);
 
-echo $div->build();
+echo $div->render();
 
 ```
 
@@ -158,16 +158,16 @@ Resultado:
 ```
 ### Exemplos
 
-Veja abaixo alguns fragmentos de código possiveis de ser usados. Nos exemplos também será usado a classe `HTML` que foi criado com auxílio da classe `Tag`.
+Veja abaixo alguns fragmentos de código possiveis de ser usados. Nos exemplos também será usado a classe `HTML` que foi criado com auxílio da classe `Element`.
 
 Estrutura simples de um parágrafo
 
 ```php
 <?php
 
-use HTML\Tag;
+use HTMLBuilder\Element;
 
-$p = new Tag('p');
+$p = new Element('p');
 
 $p->value('Texto que estará dentro do meu paragrafo.');
 
@@ -175,7 +175,7 @@ $attr = ['class'=>['text-justify', 'text-muted']];
 
 $p->attr($attr);
 
-echo $p->build();
+echo $p->render();
 ```
 
 Resultado:
@@ -188,13 +188,13 @@ Parágrafo com elementos filhos
 ```php
 <?php
 
-use HTML\Tag;
+use HTMLBuilder\Element;
 
-$strong = new Tag('strong');
+$strong = new Element('strong');
 
-$br = new Tag('br');
+$br = new Element('br');
 
-$p = new Tag('p');
+$p = new Element('p');
 
 $contentP[] = $strong->value('Nome: ');
 $contentP[] = 'Fulano de Tals';
@@ -202,7 +202,7 @@ $contentP[] = $br;
 $contentP[] = $strong->value('E-mail: ');
 $contentP[] = 'fulano@de.tals';
 
-echo $p->value($contentP)->attr(['class'=>['text-center']])->build();
+echo $p->value($contentP)->attr(['class'=>['text-center']])->render();
 ```
 
 Resultado:
@@ -219,17 +219,17 @@ Lista simples
 ```php
 <?php
 
-use HTML\Tag;
+use HTMLBuilder\Element;
 
 $contentUl = [];
 
 for ($i = 0; $i < 5; $i++) {
-    $contentUl[] = new Tag('li', 'Item ' . $i + 1);
+    $contentUl[] = new Element('li', 'Item ' . $i + 1);
 }
 
-$ul = new Tag('ul', $contentUl);
+$ul = new Element('ul', $contentUl);
 
-echo $ul->build();
+echo $ul->render();
 ```
 
 Resultado
@@ -244,28 +244,28 @@ Resultado
 </ul>
 ```
 
-### Usando a classe Factory
+### Usando a classe ElementFactory
 
-A classe Factory fabrica objetos do tipo Tag.
+A classe ElementFactory fabrica objetos do tipo `InterfaceElements`.
 
 ```php
 <?php
 
-use HTML\Factory;
+use HTMLBuilder\ElementFactory;
 
-$html = Factory::make('html')->attr('lang', ['pt-br']);
-$title = Factory::make('title')->value('Titulo da Minha Página');
-$h1 = Factory('h1')->value('Minha Página')->attr('class',['teste'])->attr('id', ['my-title']);
-$p = Factory('p')->value('Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium lectus id turpis. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Fusce wisi. Phasellus faucibus molestie nisl. Fusce eget urna. Curabitur vitae diam non enim vestibulum interdum. Nulla quis diam. Ut tempus purus at lorem.');
+$html = ElementFactory::make('html')->attr('lang', ['pt-br']);
+$title = ElementFactory::make('title')->value('Titulo da Minha Página');
+$h1 = ElementFactory('h1')->value('Minha Página')->attr('class',['teste'])->attr('id', ['my-title']);
+$p = ElementFactory('p')->value('Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium lectus id turpis. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Fusce wisi. Phasellus faucibus molestie nisl. Fusce eget urna. Curabitur vitae diam non enim vestibulum interdum. Nulla quis diam. Ut tempus purus at lorem.');
 
-$head = Factory::make('head');
+$head = ElementFactory::make('head');
 $head->value($title);
 
-$body = Factory::make('body');
+$body = ElementFactory::make('body');
 $body->value($h1)->value($p);
 
 $html->value($head)->value($body);
-echo $html->build();
+echo $html->render();
 ```
 
 Resultado

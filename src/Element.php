@@ -39,7 +39,7 @@ class Element implements InterfaceElements
     /**
      * @var array
      */
-    private $listElement = ['br', 'link', 'meta', 'hr', 'img', 'input', 'base'];
+    private $elementsNoClosing = ['area', 'col', 'command', 'embed', 'keygen', 'param', 'source', 'track', 'wbr', 'br', 'link', 'meta', 'hr', 'img', 'input', 'base'];
 
 
     /**
@@ -50,7 +50,7 @@ class Element implements InterfaceElements
      */
     public function __construct(string $name, $value = null, array $attr = [])
     {
-        $this->name = $name;
+        $this->name = strtolower($name);
         $this->value($value);
         $this->attr = $attr;
     }
@@ -107,11 +107,16 @@ class Element implements InterfaceElements
         }
         $this->tag = trim($this->tag) . '>';
 
-        if (!in_array(strtolower($this->name), $this->listElement)) {
+        if (!in_array(strtolower($this->name), $this->elementsNoClosing)) {
             $this->tag .= $this->parseValue($this->value) . '</' . $this->name . '>';
         }
 
         return $this->tag;
+    }
+
+    public function __tostring()
+    {
+        $this->render();
     }
 
     /**
@@ -131,6 +136,10 @@ class Element implements InterfaceElements
                 $str .= $this->parseValue($v);
             }
             return $str;
+        }
+
+        if (is_null($value)) {
+            return '';
         }
 
         return $value;

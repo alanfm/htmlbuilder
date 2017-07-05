@@ -34,14 +34,14 @@ class Table implements InterfaceElements
      * 
      * Recebe os titulos das colunas da tabela
      */
-    private $thead;
+    private $thead = null;
 
     /**
      * @var array $tbody
      * 
      * Recebe uma matriz com os dados da tabela
      */
-    private $tbody;
+    private $tbody = null;
 
     /**
      * @method __construct()
@@ -85,6 +85,10 @@ class Table implements InterfaceElements
      */
     private function thead_render()
     {
+        if (is_null($this->thead)) {
+            return;
+        }
+        
         $tr = ElementFactory::make('tr');
 
         foreach ($this->thead as $text) {
