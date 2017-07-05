@@ -99,7 +99,7 @@ echo $p->build();
 
 ```
 
-        Resultado:
+Resultado:
 
 ```html
 <p>Texto do meu parágrafo!</p>
@@ -115,7 +115,7 @@ echo $div->build();
 
 ```
 
-        Resultado:
+Resultado:
 
 ```html
 <span class="text-bold clear">Conteúdo do span</span>
@@ -129,7 +129,7 @@ $div->attr('class', ['text-bold', 'clear']);
 echo $div->build();
 ```
 
-        Resultado:
+Resultado:
 
 ```html
 <span class="text-bold clear">Conteúdo do span</span>
@@ -151,7 +151,7 @@ echo $div->build();
 
 ```
 
-        Resultado:
+Resultado:
 
 ```html
 <div id="main" class="content">Texto que está dentro da minha div.</div>

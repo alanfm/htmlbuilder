@@ -1,6 +1,8 @@
 {
     "name": "alanfm/html-builder",
+    
     "discription": "Interface para criação de tags/elementos HTML com PHP",
+
     "keywords": ["HTML", "HTMLBuilder", "Builder", "PHP"],
 
     "authors": [
@@ -10,6 +12,10 @@
             "role": "Developer"
         }
     ],
+
+    "homepage": "https://github.com/alanfm/htmlbuilder",
+
+    "license": "MIT",
 
     "require": {
         "php": ">=7.0"
