@@ -15,15 +15,16 @@ if (!file_exists($autoload)) {
 include_once $autoload;
 
 use HTMLBuilder\Page;
-use HTMLBuilder\Factory;
-use HTMLBuilder\Tags\Table;
+use HTMLBuilder\ElementFactory;
+use HTMLBuilder\Elements\Table;
+use HTMLBuilder\Elements\Paragraph;
 
 $page = new Page('Minha Página!');
-$page->add_in_head(Factory::make('base')->attr('href', ['http://html.dev/htmlBuilder']));
-$page->add_in_head(Factory::make('meta')->attr('charset', ['utf-8']));
-$page->add_in_body(Factory::make('h1')->value('Minha Página!'));
-$page->add_in_body(Factory::make('hr'));
-$page->add_in_body(Factory::make('p')->value('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'));
+$page->add_in_head(ElementFactory::make('base')->attr('href', ['http://html.dev/htmlBuilder']));
+$page->add_in_head(ElementFactory::make('meta')->attr('charset', ['utf-8']));
+$page->add_in_body(ElementFactory::make('h1')->value('Minha Página!'));
+$page->add_in_body(ElementFactory::make('hr'));
+$page->add_in_body(ElementFactory::make('p')->value('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'));
 
 #########################
 # Usando a classe Table #
@@ -42,3 +43,6 @@ $content = [
 $page->add_in_body((new Table($titles, $content))->attr('border', 1)->render());
 
 $page->render();
+
+$paragraph = new Paragraph('Esse é meu paragrafo!');
+$paragraph->render();

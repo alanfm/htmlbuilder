@@ -9,8 +9,8 @@ namespace HTMLBuilder\Elements;
  * @dependence InterfaceElements
  * @dependence Factory
  */
-use HTMLHTMLBuilder\Interfaces\InterfaceElements;
-use HTMLHTMLBuilder\Factory;
+use HTMLBuilder\Interfaces\InterfaceElements;
+use HTMLBuilder\ElementFactory;
 
 /**
  * @class Table
@@ -92,7 +92,7 @@ class Table implements InterfaceElements
         $tr = ElementFactory::make('tr');
 
         foreach ($this->thead as $text) {
-            $tr->value(Factory::make('th')->value($text));
+            $tr->value(ElementFactory::make('th')->value($text));
         }
 
         return ElementFactory::make('thead')->value($tr)->render();
@@ -188,7 +188,7 @@ class Table implements InterfaceElements
      * @param array $tbody
      * @return InterfaceElement(Table)
      */
-    public function value($tabody)
+    public function value($tbody)
     {
         $this->tbody($tbody);
 
