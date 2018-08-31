@@ -46,13 +46,20 @@ class Element implements InterfaceElements
      * @method __construct
      * @param string
      * @param mix
-     * @param array
+     * @param mix
      */
-    public function __construct(string $name, $value = null, array $attr = [])
+    public function __construct(string $name, $value = null, $attr = null)
+    {
+        $this->setName($name);
+        $this->value($value);
+        $this->attr($attr);
+    }
+
+    public function setName(string $name)
     {
         $this->name = strtolower($name);
-        $this->value($value);
-        $this->attr = $attr;
+
+        return $this;
     }
 
     /**
@@ -62,6 +69,10 @@ class Element implements InterfaceElements
      */
     public function value($value)
     {
+        if (is_null($value)) {
+            return $this;
+        }
+
         $this->value[] = $value;
 
         return $this;
@@ -75,7 +86,11 @@ class Element implements InterfaceElements
      */
     public function attr($attr, $value = null)
     {
-        if (is_array($attr)) {
+        if (null === $attr) {
+            return $this;
+        }
+
+        if (is_array($attr) && count($attr) > 0) {
             $this->attr = array_merge($attr, $this->attr);
             
             return $this;
@@ -101,6 +116,8 @@ class Element implements InterfaceElements
                 $this->tag .= $key . '="';
                 if (is_array($value)) {
                     $this->tag .= implode(' ', $value);
+                } else {
+                    $this->tag .= $value != false? $value: 0;
                 }
                 $this->tag .= '" ';
             }
@@ -116,7 +133,7 @@ class Element implements InterfaceElements
 
     public function __tostring()
     {
-        $this->render();
+        return $this->render();
     }
 
     /**

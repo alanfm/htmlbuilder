@@ -9,7 +9,7 @@ namespace HTMLBuilder\Elements;
  * @dependence Factory
  */
 use HTMLBuilder\Interfaces\InterfaceElements;
-use HTMLBuilder\ElementFactory;
+use HTMLBuilder\Element;
 
 /**
  * @class Table
@@ -17,38 +17,26 @@ use HTMLBuilder\ElementFactory;
  * Implementa uma ferramenta de criação de tabelas em HTML
  * 
  * @author Alan Freire <alan_freire@msn.com>
- * @version 1.0.0
+ * @version 1.2.0
  * @copyright MIT 2017
  */
-class Paragraph implements InterfaceElements
+class Paragraph extends Element
 {
     public function __construct($content = null, array $attributes = array())
     {
-        $this->paragraph = ElementFactory::make("p");
+        $this->setName('p');
 
-        $this->paragraph->value($content);
+        if (!is_null($content)) {
+            $this->value($content);
+        }
 
         if (count($attributes) > 0) {
-            $this->paragraph->attr($attributes);
+            $this->attr($attributes);
         }
     }
 
-    public function value($content)
+    public function show()
     {
-        $this->paragraph->value($content);
-
-        return $this;
-    }
-
-    public function attr($attributes, $value = null)
-    {
-        $this->paragraph->attr($attributes, $value);
-
-        return $this;
-    }
-
-    public function render()
-    {
-        echo $this->paragraph->render();
+        print $this->render();
     }
 }
